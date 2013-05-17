@@ -3,6 +3,8 @@ ScIll-library
 
 3D-rendering library for _OpenGL 3.2 core_ that was created for rendering scientific illustrations but can be used for lots of things...
 
+The lib is written in cpp, compiles under gcc & VS 2010 and has a cmake project file along with it.
+
 Certain aspects were inspired by Qt-OpenGL, which unfortunately doesn't do _OpenGL 3.2 core_ too well but offers nice abstractions. 
 
 A key-aspect is the `FilterEngine` that allows for very easy/simple fragment-shader image filters or deferred-rendering setups. The following code illustrates rendering into a rendertarget:
