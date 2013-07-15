@@ -18,7 +18,7 @@ namespace SciIllLib {
     public:
         CFilter();
         
-        bool LoadFragmentShader(std::string);
+        bool LoadFragmentShader(std::string filename);
         
     };
     

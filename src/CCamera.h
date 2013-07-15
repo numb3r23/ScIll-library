@@ -22,20 +22,20 @@ namespace SciIllLib {
         
         glm::vec3* GetPosition();
         
-        void Translate(float, float, float);
+        void Translate(float x, float y, float z);
         
-        void SetMousePosition(int, int);
-        void SetMouseMove(int, int);
+        void SetMousePosition(int x, int y);
+        void SetMouseMove(int x, int y);
         
-        void SetMouseRotationDelta(float, float);
-        void SetMouseRotation(float, float);
+        void SetMouseRotationDelta(float dx, float dy);
+        void SetMouseRotation(float dx, float dy);
         
-        void SetDistanceDelta(float);
-        void SetDistance(float);
+        void SetDistanceDelta(float distance);
+        void SetDistance(float distance);
         float GetDistance();
         
-        void SetValuesDelta(float, float, float);
-        void SetValues(float, float, float);
+        void SetValuesDelta(float theta, float phi, float distance);
+        void SetValues(float theta, float phi, float distance);
 
 		void ShowInfo();
         

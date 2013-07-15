@@ -23,38 +23,38 @@ namespace SciIllLib {
      */
     class SFilterEngine{
     public:
-        static bool Initialize(int, int);
+        static bool Initialize(int width, int height);
         
         static void ApplySequence();
-        static void Apply(GLuint, GLuint);
-        static void ApplyPure(GLuint, GLuint);
+        static void Apply(GLuint source, GLuint target);
+		static void Apply(AFilter* shader, GLuint source, ATexture* target, glm::vec4 = glm::vec4(1,1,1,0));
+        static void ApplyPure(GLuint source, GLuint target);
+
         
-        static void SetSize(int, int);
+        static void SetSize(int width, int height);
         static void SetSizeOld();
         
-        static void ReCreateDepthBuffer(GLuint*, int, int);
+        static void ReCreateDepthBuffer(GLuint* rboID, int width, int height);
         
-        static void ReGenerateTexture(GLuint*, GLenum);
-        static void ReGenerateTexture(GLuint*, GLenum, GLenum);
+        static void ReGenerateTexture(GLuint* oldTex, GLenum type);
+        static void ReGenerateTexture(GLuint* oldTex, GLenum format, GLenum type);
         
-        static void ReGenerateTextureSize(GLuint*, GLenum, int, int);
-        static void ReGenerateTextureSize(GLuint*, GLenum, GLenum, int, int);
+        static void ReGenerateTextureSize(GLuint* oldTex, GLenum type, int width, int height);
+        static void ReGenerateTextureSize(GLuint* oldTex, GLenum format, GLenum type, int width, int height);
 
-		static void DeleteTexture(GLuint*);
+		static void DeleteTexture(GLuint* oldTex);
         
-        static void ToScreen(AFilter*, GLuint);
-        static void ToScreen(AFilter*);
+        static void ToScreen(AFilter* source, GLuint texture);
+        static void ToScreen(AFilter* shader);
 
-		static void Apply(AFilter*, GLuint, ATexture*, glm::vec4 = glm::vec4(1,1,1,0));
-
-        static void Filter(GLuint);
-        static void Filter(GLuint, GLfloat*);
+        static void Filter(GLuint target);
+        static void Filter(GLuint target, GLfloat* colorBackground);
         
         static void DrawQuad();
         
-        static void PreRender(int, GLuint*, GLenum*);
-        static void PreRender(ATexture*);
-        static void PreRender(GLuint);
+        static void PreRender(int countBuffers, GLuint* targets, GLenum* buffers);
+        static void PreRender(ATexture* target);
+        static void PreRender(GLuint target);
         static void PostRender();
         
         static int GetWidth();

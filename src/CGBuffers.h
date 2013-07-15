@@ -26,9 +26,9 @@ namespace SciIllLib {
         CGBuffers();
         virtual ~CGBuffers();
         
-        void Initialize(int, int);
+        void Initialize(int width, int height);
         
-        void SetSize(int, int);
+        void SetSize(int width, int height);
         
         void Activate();
         void Deactivate();

@@ -15,8 +15,8 @@ namespace SciIllLib {
     class ATexture{
     public:
         ATexture();
-        ATexture(GLuint);
-        ATexture(GLuint, int, int);
+        ATexture(GLuint id);
+        ATexture(GLuint id, int width, int height);
         virtual ~ATexture();
 
 		inline operator GLuint(){return m_tex;}

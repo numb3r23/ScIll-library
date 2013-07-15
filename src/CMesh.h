@@ -31,14 +31,14 @@ namespace SciIllLib {
         GLuint GetVAO();
         GLuint GetVBO(VBO);
         
-        virtual GLfloat* GetBuffer(VBO);
+        virtual GLfloat* GetBuffer(VBO element);
 
         int GetElementCount();
         
         CGLShaderProgram* Shader();
         
         void SetMatWorldScale(float size=1.0f);
-        void MatWorldMult(glm::mat4);
+        void MatWorldMult(glm::mat4 mat);
         void SetMatWorld(glm::mat4 mat=glm::mat4(1));
         glm::mat4* GetMatWorld();
         

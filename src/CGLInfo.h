@@ -14,7 +14,7 @@ namespace SciIllLib {
     public:
         static void Version();
         static bool CheckError();
-        static bool CheckError(const char*);
+        static bool CheckError(const char* msg);
         static bool CheckErrorFBO();
     };
     

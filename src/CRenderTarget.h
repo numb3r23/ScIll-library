@@ -17,8 +17,8 @@ namespace SciIllLib {
     
     class CRenderTarget : public ATexture{
     public:
-        CRenderTarget(GLuint, int, int);
-        CRenderTarget(GLuint, int, int, bool);
+        CRenderTarget(GLuint tex, int width, int height);
+        CRenderTarget(GLuint tex, int width, int height, bool isScreenSize);
 
 		~CRenderTarget();
         

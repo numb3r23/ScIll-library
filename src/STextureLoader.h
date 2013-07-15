@@ -14,13 +14,13 @@ namespace SciIllLib {
     
     class STextureLoader{
     public:
-        static GLuint FTXTLoader(std::string);
-        static GLuint CreateTexture(GLint, void*, int, int);
+        static GLuint FTXTLoader(std::string fname);
+        static GLuint CreateTexture(GLint type, void* data, int width, int height);
     protected:
         STextureLoader();
         virtual ~STextureLoader();
 
-        static float* LoadFTXTData(std::string, int*, int*);
+        static float* LoadFTXTData(std::string fname, int* width, int *height);
     };
     
 }

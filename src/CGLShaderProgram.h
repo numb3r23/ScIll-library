@@ -25,11 +25,11 @@ namespace SciIllLib {
         ~CGLShaderProgram();
         
         void removeAllShaders();
-        bool addShaderFromSourceFile(GLenum, const char*);
-        bool addShaderFromSourceFile(GLenum, std::string);
+        bool addShaderFromSourceFile(GLenum type, const char* filename);
+        bool addShaderFromSourceFile(GLenum type, std::string filename);
         
-        bool addShadersFromSourceFile(const char*, const char*);
-        bool addShadersFromSourceFile(std::string, std::string);
+        bool addShadersFromSourceFile(const char* filenameVertex, const char* filenameFragment);
+        bool addShadersFromSourceFile(std::string filenameVertex, std::string filenameFragment);
         
         bool link();
         

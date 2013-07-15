@@ -28,7 +28,7 @@ namespace SciIllLib {
         ~CMeshOBJ();
         
         bool LoadFile(std::string);
-        virtual GLfloat* GetBuffer(VBO);
+        virtual GLfloat* GetBuffer(VBO element);
         void SetTB();
     private:
         std::vector<glm::vec3> vertices;
@@ -42,7 +42,7 @@ namespace SciIllLib {
         std::vector<glm::vec2> temp_uvs;
         std::vector<glm::vec3> temp_normals;
 
-        void addGroup(bool);
+        void addGroup(bool bNeedsNormals);
     };
     
 }

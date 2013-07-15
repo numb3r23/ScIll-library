@@ -26,7 +26,7 @@ namespace SciIllLib {
         void BindSampler(const char* name, GLint unit, GLuint id);
         
         virtual CGLShaderProgram* shader();
-        virtual void setShader(CGLShaderProgram*);
+        virtual void setShader(CGLShaderProgram* shader);
         
     protected:
         CGLShaderProgram* m_shader;
