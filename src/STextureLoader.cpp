@@ -9,14 +9,14 @@
 #include <fstream>
 #include <sstream>
 
-#include "STextureLoader.h"
+#include "STextureLoader.hpp"
 
-SciIllLib::STextureLoader::STextureLoader()
+RenderLib::STextureLoader::STextureLoader()
 {
 
 }
 
-SciIllLib::STextureLoader::~STextureLoader()
+RenderLib::STextureLoader::~STextureLoader()
 {
 
 }
@@ -26,7 +26,7 @@ SciIllLib::STextureLoader::~STextureLoader()
  * @param fname The filename that should be loaded
  * @returns id or 0
  */
-GLuint SciIllLib::STextureLoader::FTXTLoader(std::string fname) {
+GLuint RenderLib::STextureLoader::FTXTLoader(std::string fname) {
     GLuint tex = 0;
 	int height = 0;
 	int width = 0;
@@ -34,7 +34,7 @@ GLuint SciIllLib::STextureLoader::FTXTLoader(std::string fname) {
 	float* data = LoadFTXTData(fname, &width, &height);
 	if (data != NULL){
         tex = CreateTexture(GL_FLOAT, data, width, height);
-        delete data;
+        delete[] data;
     }else{
         std::cout << "! failed loading " << fname << std::endl;
     }
@@ -49,7 +49,7 @@ GLuint SciIllLib::STextureLoader::FTXTLoader(std::string fname) {
  * @param height height of the texture
  * @return id or 0
  */
-GLuint SciIllLib::STextureLoader::CreateTexture(GLint type, void* data, int width, int height){
+GLuint RenderLib::STextureLoader::CreateTexture(GLint type, void* data, int width, int height){
     GLuint tex = 0;
     glGenTextures(1, &tex);
     if (tex <= 0)
@@ -73,7 +73,7 @@ GLuint SciIllLib::STextureLoader::CreateTexture(GLint type, void* data, int widt
  * @returns a pointer to the raw data array
  */
 
-float* SciIllLib::STextureLoader::LoadFTXTData(std::string fname, int* width, int *height)
+float* RenderLib::STextureLoader::LoadFTXTData(std::string fname, int* width, int *height)
 {
 	int items = 0;
 	*width = 0;

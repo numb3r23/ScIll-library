@@ -1,4 +1,5 @@
-#include "CGLInfo.h"
+#include "CGLInfo.hpp"
+
 #define MAXGLERRORS 20
 
 /**
@@ -29,42 +30,42 @@ bool SciIllLib::CGLInfo::CheckError()
  */
 bool SciIllLib::CGLInfo::CheckError(const char* msg)
 {
-    int counter = 0;
+  int counter = 0;
 	GLenum errCode = glGetError();
 	bool result = false;
 	int idx = 0;
-    while (errCode != GL_NO_ERROR)
+  while (errCode != GL_NO_ERROR)
+  {
+    result = true;
+    std::cout << "!!! OpenGLError (" << idx << "): ";
+    switch (errCode)
     {
-        result = true;
-		std::cout << "!!! OpenGLError (" << idx << "): ";
-        switch (errCode)
-        {
-		//1280
-			case GL_INVALID_ENUM:
-                std::cout << "Invalid enum";
-                break;
-        //1281
-            case GL_INVALID_VALUE:
-                std::cout << "Invalid value";
-                break;
-        //1282
-            case GL_INVALID_OPERATION:
-                std::cout << "Invalid operation";
-                break;
-        //1280
-            case GL_INVALID_FRAMEBUFFER_OPERATION:
-                std::cout << "Invalid framebuffer operation";
-                break;
-            case GL_OUT_OF_MEMORY:
-                std::cout << "Out of memory";
-                break;
-        }
-        std::cout << " (" << msg << ")" << std::endl;
-        errCode = glGetError();
-		if (++counter > MAXGLERRORS)
-			errCode = GL_NO_ERROR;
-		idx++;
-	}
+    case GL_INVALID_ENUM: //1280
+      std::cout << "Invalid enum";
+      break;
+    case GL_INVALID_VALUE: //1281
+      std::cout << "Invalid value";
+      break;
+    case GL_INVALID_OPERATION: //1282
+      std::cout << "Invalid operation";
+      break;
+    case GL_INVALID_FRAMEBUFFER_OPERATION:
+      std::cout << "Invalid framebuffer operation";
+      break;
+    case GL_OUT_OF_MEMORY:
+      std::cout << "Out of memory";
+      break;
+    default:
+      std::cout << "(" << errCode << ")";
+    }
+    std::cout << " (" << msg << ")" << std::endl;
+    errCode = glGetError();
+    if (++counter > MAXGLERRORS)
+    {
+      errCode = GL_NO_ERROR;
+    }
+    idx++;
+  }
 	return result;
 }
 
@@ -78,7 +79,7 @@ bool SciIllLib::CGLInfo::CheckErrorFBO()
 	if (errCode != GL_FRAMEBUFFER_COMPLETE)
 	{
 		std::cout << "Error with fbo" << std::endl;
-        return false;
+    return false;
 	}
 	return true;
 }

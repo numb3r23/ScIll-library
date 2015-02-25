@@ -2,6 +2,7 @@
 #define CGLINFO_H
 
 #include "stdafx.h"
+
 #include <iostream>
 
 namespace SciIllLib {

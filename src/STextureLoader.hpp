@@ -10,17 +10,17 @@
 
 #include "stdafx.h"
 
-namespace SciIllLib {
+namespace RenderLib {
     
     class STextureLoader{
     public:
-        static GLuint FTXTLoader(std::string fname);
-        static GLuint CreateTexture(GLint type, void* data, int width, int height);
+        static GLuint FTXTLoader(std::string);
+        static GLuint CreateTexture(GLint, void*, int, int);
     protected:
         STextureLoader();
         virtual ~STextureLoader();
 
-        static float* LoadFTXTData(std::string fname, int* width, int *height);
+        static float* LoadFTXTData(std::string, int*, int*);
     };
     
 }

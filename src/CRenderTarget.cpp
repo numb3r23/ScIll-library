@@ -7,23 +7,27 @@
 
 #include "stdafx.h"
 
-#include "CRenderTarget.h"
+#include "CRenderTarget.hpp"
 
 SciIllLib::CRenderTarget::CRenderTarget(GLuint tex, int width, int height)
-:ATexture(tex, width, height){
-    m_bScreenSize = true;
+: ATexture(tex, width, height)
+{
+  m_bScreenSize = true;
 }
 
 SciIllLib::CRenderTarget::CRenderTarget(GLuint tex, int width, int height, bool screenSize)
-:ATexture(tex, width, height){
-    m_bScreenSize = screenSize;
+: ATexture(tex, width, height)
+{
+  m_bScreenSize = screenSize;
 }
 
-SciIllLib::CRenderTarget::~CRenderTarget(){
+SciIllLib::CRenderTarget::~CRenderTarget()
+{
 	
 }
 
-bool SciIllLib::CRenderTarget::IsScreenSize(){
-    return m_bScreenSize;
+bool SciIllLib::CRenderTarget::IsScreenSize() const
+{
+  return m_bScreenSize;
 }
 

@@ -7,147 +7,101 @@
 
 #include "stdafx.h"
 
-#include "CCamera.h"
+#include "CCamera.hpp"
 
 
-SciIllLib::CCamera::CCamera(){
+SciIllLib::CCamera::CCamera()
+{
 	Reset();
 }
 
-/**
- * Reinitialize the camer to its default position: 
- * theta, phi = 0
- * distance = 3
- */
-void SciIllLib::CCamera::Reset(){
+void SciIllLib::CCamera::Reset()
+{
 	m_theta = 0.0f;
 	m_phi = 0.0f;
 	m_distance = 4.0f;
     
-    m_fMouseX = 0.0f;
-    m_fMouseY = 0.0f;
+  m_fMouseX = 0.0f;
+  m_fMouseY = 0.0f;
 
-	v3Position = glm::vec3(0, 1, 5);
-	v3SpherePosition = v3Position;
+	m_v3Position = glm::vec3(0, 1, 5);
+	m_v3SpherePosition = m_v3Position;
 
-	v3Target = glm::vec3(0, 0, 0);
-	v3Up = glm::vec3(0, 1, 0);
+	m_v3Target = glm::vec3(0, 0, 0);
+	m_v3Up = glm::vec3(0, 1, 0);
 
 	Calculate();
 }
 
-/**
- * Return the position
- * @returns the position as a vec3
- */
-glm::vec3* SciIllLib::CCamera::GetPosition()
+glm::vec3& SciIllLib::CCamera::GetPosition()
 {
-	return &v3Position;
+	return m_v3Position;
 }
 
-void SciIllLib::CCamera::PosStore(){
-    v3PosStore = glm::vec3(m_theta, m_phi, m_distance); 
+void SciIllLib::CCamera::PosStore()
+{
+  m_v3PosStore = glm::vec3(m_theta, m_phi, m_distance);
 }
 
-void SciIllLib::CCamera::PosRecall(){
-    m_theta = v3PosStore.x;
-    m_phi = v3PosStore.y;
-    m_distance = v3PosStore.z; 
-    Calculate();
+void SciIllLib::CCamera::PosRecall()
+{
+  m_theta = m_v3PosStore.x;
+  m_phi = m_v3PosStore.y;
+  m_distance = m_v3PosStore.z;
+  Calculate();
 }
 
-
-/**
- * Translate the center of the camera
- * @param x the translation on the x-axis
- * @param y the translation on the y-axis
- * @param z the translation on the z-axis
- */
-void SciIllLib::CCamera::Translate(float x, float y, float z){
-	v3Target += glm::vec3(x, y, z);
-	v3Position = v3SpherePosition + v3Target;
+void SciIllLib::CCamera::Translate(const float x, const float y, const float z)
+{
+	m_v3Target += glm::vec3(x, y, z);
+	m_v3Position = m_v3SpherePosition + m_v3Target;
 }
 
-/**
- * Set absolute mouse position (no change to rotation - use for mousedown)
- * @param x the x-coordinate
- * @param y the y-coordinate
- */
-void SciIllLib::CCamera::SetMousePosition(int x, int y){
-    m_fMouseX = x;
-    m_fMouseY = y;
+void SciIllLib::CCamera::SetMousePosition(const int x, const int y)
+{
+  m_fMouseX = x;
+  m_fMouseY = y;
 }
 
-/**
- * Set changed mouse position - delta is calculated and applied!
- * @param x the x-coordinate
- * @param y the y-coordinate
- */
-void SciIllLib::CCamera::SetMouseMove(int x, int y){
-    SetMouseRotationDelta(x - m_fMouseX, y - m_fMouseY);
-    
-    m_fMouseX = x;
-    m_fMouseY = y;
+void SciIllLib::CCamera::SetMouseMove(const int x, const int y)
+{
+  SetMouseRotationDelta(x - m_fMouseX, y - m_fMouseY);
+  
+  m_fMouseX = x;
+  m_fMouseY = y;
 }
 
-/**
- * Set a delta mouse rotation that is added to the angles
- * the new position is immediately recalculated
- * @param dx delta movement on the x-axis -> theta
- * @param dy delta movement on the y-axis -> phi
- */
-void SciIllLib::CCamera::SetMouseRotationDelta(float dx, float dy){
-	m_theta -= dx;
-	m_phi += dy;
+void SciIllLib::CCamera::SetMouseRotationDelta(const float dx, const float dy)
+{
+	m_theta -= dx * 0.25f;
+	m_phi += dy * 0.25f;
 
 	Calculate();
 }
 
-/**
- * Set an abolute mouse rotation  -> set the angles
- * the new position is immediately recalculated
- * @param dx value (angle) for theta 
- * @param dy value (angle) for phi 
- */
-void SciIllLib::CCamera::SetMouseRotation(float dx, float dy){
+void SciIllLib::CCamera::SetMouseRotation(const float dx, const float dy)
+{
 	m_theta = dx;
 	m_phi = dy;
 
 	Calculate();
 }
 
-/**
- * Set a delta distances that is added to the current distance
- * the new position is immediately recalculated
- * @param distance delta distance 
- */
-void SciIllLib::CCamera::SetDistanceDelta(float distance)
+void SciIllLib::CCamera::SetDistanceDelta(const float distance)
 {
 	m_distance += distance;
 
 	Calculate();
 }
 
-/**
- * Set an abolute camera distance
- * the new position is immediately recalculated
- * @param distance the new distance between camera and object
- */
-void SciIllLib::CCamera::SetDistance(float distance)
+void SciIllLib::CCamera::SetDistance(const float distance)
 {
 	m_distance = distance;
 
 	Calculate();
 }
 
-/**
- * Set a delta distance and angles that are added to the current values
- * the new position is immediately recalculated
- * @param theta delta movement on the x-axis -> theta
- * @param phi delta movement on the y-axis -> phi
- * @param distance delta distance 
- */
-void SciIllLib::CCamera::SetValuesDelta(float theta, float phi, float distance)
+void SciIllLib::CCamera::SetValuesDelta(const float theta, const float phi, const float distance)
 {
 	m_theta -= theta;
 	m_phi += phi;
@@ -156,18 +110,11 @@ void SciIllLib::CCamera::SetValuesDelta(float theta, float phi, float distance)
 	Calculate();
 }
 
-float SciIllLib::CCamera::GetDistance()
+float SciIllLib::CCamera::GetDistance() const
 {
 	return m_distance;
 }
 
-/**
- * Set absolut values for the camera
- * the new position is immediately recalculated
- * @param theta value (angle) for theta 
- * @param phi value (angle) for phi 
- * @param distance the new distance between camera and object
- */
 void SciIllLib::CCamera::SetValues(float theta, float phi, float distance)
 {
 	m_theta = theta;
@@ -177,38 +124,22 @@ void SciIllLib::CCamera::SetValues(float theta, float phi, float distance)
 	Calculate();
 }
 
-/**
- * Set the current view matrix (a.k.a. lookat) using the current values to a shader as a mat 4x4.
- * The shader has to be bound!
- * @param shader a pointer to a CGLShaderProgram instance
- * @param name the name of the shader parameter that is stores the ViewMatrix as a mat4x4
- */
-void SciIllLib::CCamera::SetViewMatrix(CGLShaderProgram* shader, const char* name)
+void SciIllLib::CCamera::SetViewMatrix(CGLShaderProgram& shader, const char* name)
 {
-	shader->setUniformValue(name, m_mat4View);
+	shader.setUniformValue(name, m_mat4View);
 }
 
-glm::mat4 SciIllLib::CCamera::GetViewMatrix(){
+glm::mat4& SciIllLib::CCamera::GetViewMatrix(){
     return m_mat4View;
 }
 
-/**
- * Set the current camera position to a shader as a vec3.
- * The shader has to be bound!
- * @param shader a pointer to a CGLShaderProgram instance
- * @param name the name of the shader parameter that stores thecamera position as a vec3
- */
-void SciIllLib::CCamera::SetViewPosition(CGLShaderProgram* shader, const char* name)
+void SciIllLib::CCamera::SetViewPosition(CGLShaderProgram& shader, const char* name)
 {
-	shader->setUniformValue(name, v3Position.x, v3Position.y, v3Position.z);
+	shader.setUniformValue(name, m_v3Position.x, m_v3Position.y, m_v3Position.z);
 }
 
-/**
- * Recalculate position and up vector of the camera
- */
 void SciIllLib::CCamera::Calculate()
 {
-//glm	
 	glm::mat4 mat4 = glm::mat4(1.0f);
 	mat4 = glm::rotate(mat4, m_theta, glm::vec3(0, 1, 0));
 	mat4 = glm::rotate(mat4, m_phi, glm::vec3(1, 0, 0));
@@ -218,20 +149,22 @@ void SciIllLib::CCamera::Calculate()
 	v4B = mat4 * v4B;
 	v4U = mat4 * v4U;
 
-	v3SpherePosition = glm::vec3(v4B);
-	v3Up = glm::vec3(v4U);
-	v3Position = glm::vec3(v3SpherePosition + v3Target);
-    m_mat4View = glm::lookAt(
-                             v3Position,
-                             v3Target,
-                             v3Up
-                             );
-
+	m_v3SpherePosition = glm::vec3(v4B);
+	m_v3Up = glm::vec3(v4U);
+	m_v3Position = m_v3SpherePosition + m_v3Target;
+  m_mat4View = glm::lookAt(m_v3Position,
+                           m_v3Target,
+                           m_v3Up);
 }
 
-void SciIllLib::CCamera::ShowInfo(){
+void SciIllLib::CCamera::ShowInfo() const
+{
 	std::cout << " Status nformation" << std::endl;
-	std::cout << "- Position: (" << v3Position.x << ", " << v3Position.y << ", " << v3Position.z << ")" << std::endl;
-    std::cout << "- Target: (" << v3Target.x << ", " << v3Target.y << ", " << v3Target.z << ")" << std::endl;
-    std::cout << "- Polar: (" << m_theta << ", " << m_phi << ", " << m_distance << ")" << std::endl;
+	std::cout << "- Position: (" << m_v3Position.x << ", "
+                               << m_v3Position.y << ", "
+                               << m_v3Position.z << ")" << std::endl;
+  std::cout << "- Target: (" << m_v3Target.x << ", "
+                             << m_v3Target.y << ", "
+                             << m_v3Target.z << ")" << std::endl;
+  std::cout << "- Polar: (" << m_theta << ", " << m_phi << ", " << m_distance << ")" << std::endl;
 }

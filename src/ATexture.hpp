@@ -15,19 +15,19 @@ namespace SciIllLib {
     class ATexture{
     public:
         ATexture();
-        ATexture(GLuint id);
-        ATexture(GLuint id, int width, int height);
+        ATexture(const GLuint id);
+        ATexture(const GLuint id, const int width, const int height);
         virtual ~ATexture();
 
-		inline operator GLuint(){return m_tex;}
+        inline operator GLuint(){return m_tex;}
         GLuint operator~ ();
         
-        GLuint GetID();
+        const GLuint GetID() const;
         
-		int GetWidth();
-		int GetHeight();
+        const int GetWidth() const;
+        const int GetHeight() const;
     protected:
-		int m_width;
+        int m_width;
         int m_height;
 
         GLuint m_tex;
